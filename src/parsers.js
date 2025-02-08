@@ -1,5 +1,5 @@
 import yaml from 'js-yaml';
-import fs from 'fs';
+import fs, { readFileSync } from 'fs';
 import path from 'path';
 
 export const parseFile = (filepath) => {
