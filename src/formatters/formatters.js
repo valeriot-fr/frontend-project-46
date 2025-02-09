@@ -2,13 +2,13 @@ import stylish from "./stylish.js";
 import plain from "./plain.js";
 import json from "./json.js";
 
-const formatters = {
+export default {
     stylish,
     plain,
     json,
 };
 
-export default (diff, format) => {
+export const formatDiff = (diff, format) => {
     if (!formatters[format]) {
         throw new Error(`Unknown format: ${format}`);
     }

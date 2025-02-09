@@ -1,31 +1,33 @@
-import _ from "lodash";
+const indent = (depth) => ' '.repeat(depth * 4 - 2);
 
-const getIndent = (depth) => ' '.repeat(depth * 4 - 2);
-const formatValue = (value, depth) => {
-    if (!_.isObject(value)) return value;
-    const indent = getIndent(depth + 1);
-    const entries = Object.entries(value)
-        .map(([key, val]) => `${indent}  ${key}: ${formatValue(val, depth + 1)}`);
-    return `{\n${entries.join('\n')}\n${getIndent(depth)}  }`;
+const stringify = (value, depth = 1) => {
+  if (typeof value !== 'object' || value === null) return String(value);
+  const entries = Object.entries(value)
+    .map(([key, val]) => `${indent(depth + 1)}  ${key}: ${stringify(val, depth + 1)}`)
+    .join('\n');
+  return `{\n${entries}\n${indent(depth)}  }`;
 };
 
 const stylish = (diff, depth = 1) => {
-    const lines = diff.map((node) => {
-        const indent = getIndent(depth);
-        switch (node.type) {
-            case 'removed':
-                return `${indent}- ${node.key}: ${formatValue(node.value, depth)}`;
-            case 'added':
-                return `${indent}+ ${node.key}: ${formatValue(node.value, depth)}`;
-            case 'updated':
-                return `${indent}- ${node.key}: ${formatValue(node.oldValue, depth)}\n${indent}+ ${node.key}: ${formatValue(node.newValue, depth)}`;
-            case 'nested':
-                return `${indent}  ${node.key}: {\n${stylish(node.children, depth + 1)}\n${indent}  }`;
-            default:
-                return `${indent}  ${node.key}: ${formatValue(node.value, depth)}`;
-        }
-    });
-    return lines.join('\n');
+  const formatNode = (node) => {
+    switch (node.type) {
+      case 'added':
+        return `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
+      case 'removed':
+        return `${indent(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
+      case 'changed':
+        return [
+          `${indent(depth)}- ${node.key}: ${stringify(node.oldValue, depth)}`,
+          `${indent(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`,
+        ].join('\n');
+      case 'nested':
+        return `${indent(depth)}  ${node.key}: {\n${stylish(node.children, depth + 1)}\n${indent(depth)}  }`;
+      default:
+        return `${indent(depth)}  ${node.key}: ${stringify(node.value, depth)}`;
+    }
+  };
+
+  return diff.map(formatNode).join('\n');
 };
 
 export default stylish;
