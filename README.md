@@ -12,8 +12,8 @@
 
 <a href="./img/format_plain.png">gendiff --format plain</a>
 
-<a href="./img/format_json.png">
+<a href="./img/format_json.png">gendiff --format JSON first part</a>
 
-<a href="./img/format_json_2.png">
+<a href="./img/format_json_2.png">gendiff --format JSON second part</a>
 
-<a href="./img/format_json_3.png">gendiff --format JSON</a>
+<a href="./img/format_json_3.png">gendiff --format JSON third part</a>
