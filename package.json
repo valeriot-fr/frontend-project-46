@@ -6,7 +6,7 @@
   "author": "Muzyka Valeryia",
   "license": "ISC",
   "bin": {
-    "gendiff": "./bin/gendiff.js"
+    "gendiff": "bin/gendiff.js gendiff"
   },
   "main": "src/index.js",
   "scripts": {
