@@ -2,6 +2,7 @@ import { fileURLToPath } from 'url';
 import path, { join } from 'path';
 import genDiff from '../src/index.js';
 import { readFileSync } from 'fs';
+import { formatDiff } from '../src/formatters/formatters.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,3 +28,9 @@ describe.each([
       expect(normalizeWhiteSpace(genDiff(file1, file2, format))).toMatch(normalizeWhiteSpace(expectedOutput));
     });
   });
+
+describe('formatDiff', () => {
+    test('should throw an error for an unknown format', () => {
+        expect(() => formatDiff([], 'unknownFormat')).toThrow('Unknown format: unknownFormat');
+    });
+});
