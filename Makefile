@@ -1,7 +1,7 @@
 install:
 	npm install
 gendiff:
-	node src/index.js gendiff
+	node src/index.js
 lint:
 	npx eslint .
 test:
