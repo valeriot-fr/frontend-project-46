@@ -20,7 +20,7 @@
     "coverageDirectory": "coverage",
     "coverageReporters": [
       "json",
-      "Icov",
+      "lcov",
       "text",
       "clover"
     ]
