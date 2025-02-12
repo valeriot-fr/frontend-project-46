@@ -11,39 +11,19 @@ const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
 const normalizeWhiteSpace = (str) => str.replace(/\s+/g, ' ').trim();
 
-test('gendiff nested YAML files', () => {
-    const file1 = getFixturePath('file1.yml');
-    const file2 = getFixturePath('file2.yml');
-    const expectedOutput = readFile('expected_stylish.json');
-    expect(normalizeWhiteSpace(genDiff(file1, file2))).toMatch(normalizeWhiteSpace(expectedOutput));
-});
-test('gendiff nested JSON files', () => {
-    const file1 = getFixturePath('file1.json');
-    const file2 = getFixturePath('file2.json');
-    const expectedOutput = readFile('expected_stylish.json');
-    expect(normalizeWhiteSpace(genDiff(file1, file2))).toMatch(normalizeWhiteSpace(expectedOutput));
-});
-test('gendiff plain format JSON files', () => {
-    const file1 = getFixturePath('file1.json');
-    const file2 = getFixturePath('file2.json');
-    const expectedOutput = readFile('expected_plain.txt');
-    expect(normalizeWhiteSpace(genDiff(file1, file2, 'plain'))).toMatch(normalizeWhiteSpace(expectedOutput));
-});
-test('gendiff plain format YML files', () => {
-    const file1 = getFixturePath('file1.yml');
-    const file2 = getFixturePath('file2.yml');
-    const expectedOutput = readFile('expected_plain.txt');
-    expect(normalizeWhiteSpace(genDiff(file1, file2, 'plain'))).toMatch(normalizeWhiteSpace(expectedOutput));
-});
-test('gendiff JSON format', () => {
-    const file1 = getFixturePath('file1.json');
-    const file2 = getFixturePath('file2.json');
-    const expectedOutput = readFile('expected_json.json');
-    expect(normalizeWhiteSpace(genDiff(file1, file2, 'json'))).toMatch(normalizeWhiteSpace(expectedOutput));
-});
-test('gendiff JSON format with YML files', () => {
-    const file1 = getFixturePath('file1.yml');
-    const file2 = getFixturePath('file2.yml');
-    const expectedOutput = readFile('expected_json.json');
-    expect(normalizeWhiteSpace(genDiff(file1, file2, 'json'))).toMatch(normalizeWhiteSpace(expectedOutput));
-})
+describe.each([
+    ['JSON files', 'file1.json', 'file2.json'],
+    ['YML files', 'file1.yml', 'file2.yml'],
+  ])('gendiff with %s', (_, file1Name, file2Name) => {
+    const file1 = getFixturePath(file1Name);
+    const file2 = getFixturePath(file2Name);
+  
+    test.each([
+      ['stylish', undefined, 'expected_stylish.json'],
+      ['plain', 'plain', 'expected_plain.txt'],
+      ['json', 'json', 'expected_json.json'],
+    ])('should generate %s format', (_, format, expectedFile) => {
+      const expectedOutput = readFile(expectedFile);
+      expect(normalizeWhiteSpace(genDiff(file1, file2, format))).toMatch(normalizeWhiteSpace(expectedOutput));
+    });
+  });

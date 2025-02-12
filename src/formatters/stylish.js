@@ -1,4 +1,7 @@
-const indent = (depth) => ' '.repeat(depth * 4 - 2);
+const INDENT_SIZE = 4;
+const OFFSET = 2;
+
+const indent = (depth) => ' '.repeat(depth * INDENT_SIZE - OFFSET);
 
 const stringify = (value, depth = 1) => {
   if (typeof value !== 'object' || value === null) return String(value);
