@@ -3,10 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import genDiff from '../src/index.js';
 
-const filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(filename);
+const currentFilename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(currentFilename);
 
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const getFixturePath = (filename) => path.join(dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 const normalizeWhiteSpace = (str) => str.replace(/\s+/g, ' ').trim();
@@ -20,7 +20,8 @@ describe.each([
   const expected = readFile(expectedFile);
 
   test('should generate default format', () => {
-    expect(normalizeWhiteSpace(genDiff(file1, file2))).toMatch(normalizeWhiteSpace(expected));
+    expect(normalizeWhiteSpace(genDiff(file1, file2)))
+      .toMatch(normalizeWhiteSpace(expected));
   });
 });
 
@@ -34,7 +35,7 @@ describe.each([
 
   test('should generate plain format', () => {
     expect(normalizeWhiteSpace(genDiff(file1, file2, format)))
-    .toMatch(normalizeWhiteSpace(expected));
+      .toMatch(normalizeWhiteSpace(expected));
   });
 });
 
@@ -48,6 +49,6 @@ describe.each([
 
   test('should generate json format', () => {
     expect(normalizeWhiteSpace(genDiff(file1, file2, format)))
-    .toMatch(normalizeWhiteSpace(expected));
+      .toMatch(normalizeWhiteSpace(expected));
   });
 });
