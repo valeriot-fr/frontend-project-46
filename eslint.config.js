@@ -1,8 +1,17 @@
-import globals from 'globals';
-import pluginJs from '@eslint/js';
-import { configs as tseslintConfigs } from '@typescript-eslint/eslint-plugin';
+import globals from "globals";
+import pluginJs from "@eslint/js";
+import tseslint from "typescript-eslint";
 
-const config = {
+
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  {files: ["**/*.{js,mjs,cjs,ts}"]},
+  {languageOptions: { globals: globals.browser }},
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+];
+
+module.exports = {
   env: {
     node: true,
     jest: true,
@@ -20,12 +29,3 @@ const config = {
     sourceType: 'module',
   },
 };
-
-const overrides = [
-  { files: ['**/*.{js,mjs,cjs,ts}'] },
-  { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended,
-  ...tseslintConfigs.recommended,
-];
-
-export default { ...config, overrides };
