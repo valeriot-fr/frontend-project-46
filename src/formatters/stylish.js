@@ -1,36 +1,43 @@
-const INDENT_SIZE = 4;
-const OFFSET = 2;
+import _ from 'lodash';
 
-const indent = (depth) => ' '.repeat(depth * INDENT_SIZE - OFFSET);
+const replacer = '    ';
 
-const stringify = (value, depth = 1) => {
-  if (typeof value !== 'object' || value === null) return String(value);
-  const entries = Object.entries(value)
-    .map(([key, val]) => `${indent(depth + 1)}  ${key}: ${stringify(val, depth + 1)}`)
-    .join('\n');
-  return `{\n${entries}\n${indent(depth)}  }`;
+const stringify = (data, depth) => {
+  if (!_.isObject(data)) {
+    return `${data}`;
+  }
+
+  const currentReplacer = replacer.repeat(depth);
+  const entries = Object.entries(data);
+  const strings = entries.map(([key, value]) => `${currentReplacer}    ${key}: ${stringify(value, depth + 1)}`);
+  return `{\n${strings.join('\n')}\n${currentReplacer}}`;
 };
 
-const stylish = (diff, depth = 1) => {
-  const formatNode = (node) => {
-    switch (node.type) {
-      case 'added':
-        return `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
-      case 'removed':
-        return `${indent(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
-      case 'changed':
-        return [
-          `${indent(depth)}- ${node.key}: ${stringify(node.oldValue, depth)}`,
-          `${indent(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`,
-        ].join('\n');
-      case 'nested':
-        return `${indent(depth)}  ${node.key}: {\n${stylish(node.children, depth + 1)}\n${indent(depth)}  }`;
-      default:
-        return `${indent(depth)}  ${node.key}: ${stringify(node.value, depth)}`;
-    }
+const stylish = (data) => {
+  const iter = (obj, depth) => {
+    const currentReplacer = replacer.repeat(depth);
+    const result = obj.flatMap((node) => {
+      const {
+        key, oldValue, value, type,
+      } = node;
+      switch (type) {
+        case 'added':
+          return `${currentReplacer}  + ${key}: ${stringify(value, depth + 1)}`;
+        case 'deleted':
+          return `${currentReplacer}  - ${key}: ${stringify(value, depth + 1)}`;
+        case 'unchanged':
+          return `${currentReplacer}    ${key}: ${stringify(value, depth + 1)}`;
+        case 'changed':
+          return `${currentReplacer}  - ${key}: ${stringify(oldValue, depth + 1)}\n${currentReplacer}  + ${key}: ${stringify(value, depth + 1)}`;
+        case 'hasChild':
+          return `${currentReplacer}    ${key}: ${iter(value, depth + 1)}`;
+        default:
+          throw new Error('something wrong');
+      }
+    });
+    return `{\n${result.join('\n')}\n${currentReplacer}}`;
   };
-
-  return diff.map(formatNode).join('\n');
+  return iter(data, 0);
 };
 
 export default stylish;

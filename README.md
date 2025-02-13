@@ -1,3 +1,7 @@
+### Hexlet tests and linter status:
+[![Actions Status](https://github.com/valeriot-fr/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/valeriot-fr/frontend-project-46/actions)
+
+![Test Coverage]("https://codeclimate.com/github/valeriot-fr/frontend-project-46/test_coverage"><img src="https://api.codeclimate.com/v1/badges/84c484105735bc02003a/test_coverage")
 # Проект "Вычислитель отличий"
 Вычислитель отличий – программа, определяющая разницу между двумя структурами данных. Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах.
 
@@ -6,16 +10,55 @@
 - Поддержка разных входных форматов: yaml, json
 - Генерация отчета в виде plain text, stylish и json
 
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/valeriot-fr/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/valeriot-fr/frontend-project-46/actions)
+### Install
+Clone this repo: 
+```
+git clone https://github.com/alllenk1/frontend-project-46.git
+```
 
-![Test Coverage](<a href="https://codeclimate.com/github/valeriot-fr/frontend-project-46/test_coverage"><img src="https://api.codeclimate.com/v1/badges/84c484105735bc02003a/test_coverage" /></a>)
+Go to the project folder: 
+```
+cd frontend-project-46
+```
 
+Install package: 
+```
+make install
+npm link
+```
 
-<a href="">JSON files comparison</a>
+### Usage
+To read help:
+```
+gendiff -h
+```
 
-<a href="">YML files comparison</a>
+To see version:
+```
+gendiff -V
+```
 
-<a href="">gendiff --format plain</a>
+To compare two files:
+```
+gendiff <path to file1> <path to file2>
+```
 
-<a href="">gendiff --format JSON</a>
+To select the output format:
+```
+gendiff --format plain <path to file1> <path to file2>
+```
+
+### Examples
+#### Help and version
+[![asciicast]()]
+
+#### Two JSON files with nested objects compare (stylish formatter)
+[![asciicast]()]
+
+#### Two YML files with nested objects compare (stylish formatter)
+[![asciicast]()]
+
+#### Plain formatter
+[![asciicast]()]
+#### JSON formatter
+[![asciicast]()]

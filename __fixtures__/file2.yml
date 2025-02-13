@@ -13,7 +13,7 @@ common:
 group1:
   foo: bar
   baz: bars
-  nest: str 
+  nest: str
 group3:
   deep:
     id:

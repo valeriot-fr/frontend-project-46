@@ -1,37 +1,51 @@
 import { fileURLToPath } from 'url';
-import path, { join } from 'path';
+import fs from 'fs';
+import path from 'path';
 import genDiff from '../src/index.js';
-import { readFileSync } from 'fs';
-import { formatDiff } from '../src/formatters/formatters.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(filename);
 
-const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
-const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 const normalizeWhiteSpace = (str) => str.replace(/\s+/g, ' ').trim();
 
 describe.each([
-    ['JSON files', 'file1.json', 'file2.json'],
-    ['YML files', 'file1.yml', 'file2.yml'],
-])('gendiff with %s', (_, file1Name, file2Name) => {
-    const file1 = getFixturePath(file1Name);
-    const file2 = getFixturePath(file2Name);
+  ['file1.json', 'file2.json', 'resultTree.txt'],
+  ['file1.yml', 'file2.yml', 'resultTree.txt']
+])('gendiff with %s and %s', (file1Name, file2Name, expectedFile) => {
+  const file1 = getFixturePath(file1Name);
+  const file2 = getFixturePath(file2Name);
+  const expected = readFile(expectedFile);
 
-    test.each([
-      ['stylish', undefined, 'expected_stylish.json'],
-      ['plain', 'plain', 'expected_plain.txt'],
-      ['json', 'json', 'expected_json.json'],
-    ])('should generate %s format', (_, format, expectedFile) => {
-        const expectedOutput = readFile(expectedFile);
-        expect(normalizeWhiteSpace(genDiff(file1, file2, format)))
-            .toMatch(normalizeWhiteSpace(expectedOutput));
-    });
+  test('should generate default format', () => {
+    expect(normalizeWhiteSpace(genDiff(file1, file2))).toMatch(normalizeWhiteSpace(expected));
+  });
 });
 
-describe('formatDiff', () => {
-    test('should throw an error for an unknown format', () => {
-        expect(() => formatDiff([], 'unknownFormat')).toThrow('Unknown format: unknownFormat');
-    });
+describe.each([
+  ['file1.json', 'file2.json', 'resultPlain.txt', 'plain'],
+  ['file1.yml', 'file2.yml', 'resultPlain.txt', 'plain']
+])('gendiff with %s and %s in plain format', (file1Name, file2Name, expectedFile, format) => {
+  const file1 = getFixturePath(file1Name);
+  const file2 = getFixturePath(file2Name);
+  const expected = readFile(expectedFile);
+
+  test('should generate plain format', () => {
+    expect(normalizeWhiteSpace(genDiff(file1, file2, format))).toMatch(normalizeWhiteSpace(expected));
+  });
+});
+
+describe.each([
+  ['file1.json', 'file2.json', 'resultJSON.txt', 'json'],
+  ['file1.yml', 'file2.yml', 'resultJSON.txt', 'json']
+])('gendiff with %s and %s in json format', (file1Name, file2Name, expectedFile, format) => {
+  const file1 = getFixturePath(file1Name);
+  const file2 = getFixturePath(file2Name);
+  const expected = readFile(expectedFile);
+
+  test('should generate json format', () => {
+    expect(normalizeWhiteSpace(genDiff(file1, file2, format))).toMatch(normalizeWhiteSpace(expected));
+  });
 });
