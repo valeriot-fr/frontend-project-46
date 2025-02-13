@@ -3,7 +3,7 @@ import _ from "lodash";
 const formatValue = (value) => {
     if (_.isObject(value)) return '[complex value]';
     if (value === null) return 'null';
-    if (typeof value === 'string') return `'${value}'`;
+    if (typeof value === 'string') return `${value}`;
     return String(value);
 };
 
