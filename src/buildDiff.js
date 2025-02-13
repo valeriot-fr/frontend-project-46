@@ -6,11 +6,11 @@ const buildDiff = (obj1, obj2) => {
     const value1 = obj1[key];
     const value2 = obj2[key];
 
-    if (!Object.hasOwn(obj1, key)) {
+    if (!Object.prototype.hasOwnProperty.call(obj1, key)) {
       return { key, value: value2, type: 'added' };
     }
 
-    if (!Object.hasOwn(obj2, key)) {
+    if (!Object.prototype.hasOwnProperty.call(obj2, key)) {
       return { key, value: value1, type: 'deleted' };
     }
 
@@ -30,4 +30,5 @@ const buildDiff = (obj1, obj2) => {
   });
   return resultObj;
 };
+
 export default buildDiff;
