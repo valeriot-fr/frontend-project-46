@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1739470422135" clover="3.2.0">
-  <project timestamp="1739470422135" name="All files">
+<coverage generated="1739470917223" clover="3.2.0">
+  <project timestamp="1739470917223" name="All files">
     <metrics statements="80" coveredstatements="76" conditionals="39" coveredconditionals="35" methods="17" coveredmethods="17" elements="136" coveredelements="128" complexity="0" loc="80" ncloc="80" packages="2" files="6" classes="6"/>
     <package name="src">
       <metrics statements="31" coveredstatements="30" conditionals="15" coveredconditionals="14" methods="6" coveredmethods="6"/>
@@ -49,12 +49,12 @@
       <metrics statements="49" coveredstatements="46" conditionals="24" coveredconditionals="21" methods="11" coveredmethods="11"/>
       <file name="formatters.js" path="D:\js\frontend-project-46-1\src\formatters\formatters.js">
         <metrics statements="6" coveredstatements="5" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="6" type="cond" truecount="3" falsecount="1"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="6" type="cond" truecount="3" falsecount="1"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
       </file>
       <file name="plain.js" path="D:\js\frontend-project-46-1\src\formatters\plain.js">
         <metrics statements="21" coveredstatements="20" conditionals="12" coveredconditionals="11" methods="5" coveredmethods="5"/>
