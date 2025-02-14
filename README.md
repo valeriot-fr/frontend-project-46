@@ -50,16 +50,14 @@ gendiff --format plain <path to file1> <path to file2>
 ```
 
 ### Examples
-#### Help and version
-[![asciicast]()]
-
 #### Two JSON files with nested objects compare (stylish formatter)
-[![asciicast]()]
+[![asciicast](https://asciinema.org/a/pc3BDqhr29nj5MeEKzyaGc9VO)]
 
 #### Two YML files with nested objects compare (stylish formatter)
-[![asciicast]()]
+[![asciicast](https://asciinema.org/a/KLcX4eh5E55uzYgYfbFn5AcCm)]
 
 #### Plain formatter
-[![asciicast]()]
+[![asciicast](https://asciinema.org/a/Q93Q2OpJN21sB2Sh2zk5AoGty)]
+
 #### JSON formatter
-[![asciicast]()]
+[![asciicast](https://asciinema.org/a/qGGtupJFpdV3JNmKXKx3Op3oh)]
