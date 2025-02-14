@@ -1,45 +1,29 @@
-name: CI
+name: Java CI
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '**/*.yml'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - '**/*.yml'
+  - push
+  - pull_request
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
-
-      - name: Run lint
-        run: make lint
-
-      - name: Run tests with coverage
-        run: npm test -- --coverage
-      
-      - name: Upload coverage to CodeClimate
-        run: |
-          npx codeclimate-test-reporter < coverage/lcov.info
+          java-version: '21'
+          distribution: 'temurin'
+      - uses: gradle/gradle-build-action@v3
+        with:
+          gradle-version: 8.7
+      - run: ./gradlew checkstyleMain
+      - run: ./gradlew test
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v9.0.0
         env:
-          CC_TEST_REPORTER_ID: ${ 17909b64ce8523e36f573ded3cd7ff86247c70b4e8d5ea50f79e6f5017e1d569 }
-
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+          JACOCO_SOURCE_PATH: ${{github.workspace}}/src/main/java
+        with:
+          coverageCommand: make report
+          coverageLocations: ${{github.workspace}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco

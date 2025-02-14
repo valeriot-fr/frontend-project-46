@@ -10,17 +10,7 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
-  },
-  "jest": {
-    "collectCoverage": true,
-    "coverageDirectory": "coverage",
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text",
-      "clover"
-    ]
+    "test": "jest --coverage"
   },
   "dependencies": {
     "commander": "^13.1.0",
