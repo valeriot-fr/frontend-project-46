@@ -17,7 +17,7 @@ const plain = (data) => {
     const values = Object.values(obj);
     const strings = values.flatMap((node) => {
       const {
-        key, oldValue, value, type,
+        key, oldValue, value, type, children,
       } = node;
       const newPath = path === '' ? `${key}` : `${path}.${key}`;
       switch (type) {
@@ -28,7 +28,7 @@ const plain = (data) => {
         case 'changed':
           return `Property '${newPath}' was updated. From ${stringify(oldValue)} to ${stringify(value)}`;
         case 'hasChild':
-          return iter(value, newPath);
+          return iter(children, newPath);
         case 'unchanged':
           return [];
         default:

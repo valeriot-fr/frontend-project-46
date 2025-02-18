@@ -15,10 +15,13 @@ const stringify = (data, depth) => {
 
 const stylish = (data) => {
   const iter = (obj, depth) => {
+    if (!Array.isArray(obj)) {
+      throw new Error('Expected obj to be an array');
+    }
     const currentReplacer = replacer.repeat(depth);
     const result = obj.flatMap((node) => {
       const {
-        key, oldValue, value, type,
+        key, oldValue, value, type, children,
       } = node;
       switch (type) {
         case 'added':
@@ -30,7 +33,7 @@ const stylish = (data) => {
         case 'changed':
           return `${currentReplacer}  - ${key}: ${stringify(oldValue, depth + 1)}\n${currentReplacer}  + ${key}: ${stringify(value, depth + 1)}`;
         case 'hasChild':
-          return `${currentReplacer}    ${key}: ${iter(value, depth + 1)}`;
+          return `${currentReplacer}    ${key}: ${iter(children, depth + 1)}`;
         default:
           throw new Error('something wrong');
       }
