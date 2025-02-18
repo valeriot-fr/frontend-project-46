@@ -10,7 +10,7 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest"
   },
   "dependencies": {
     "commander": "^13.1.0",
