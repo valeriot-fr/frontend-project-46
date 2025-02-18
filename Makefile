@@ -7,6 +7,6 @@ publish:
 lint:
 	npx eslint .
 test:
-	npx jest --coverage
+	npm test
 test-coverage:
 	npm test -- --coverage --coverageProvider=v8
