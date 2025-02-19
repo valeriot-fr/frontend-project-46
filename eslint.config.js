@@ -15,7 +15,7 @@ module.exports = [
     ],
     plugins: ['jest'],
     rules: {
-      'fp/no-mutation': 'off',
+      'fp/no-mutation': ['error', { commonjs: true }],
     },
   },
 ];
