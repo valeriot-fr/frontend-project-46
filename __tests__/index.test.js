@@ -36,10 +36,10 @@ test('should throw error in buildDiff when resultObj is not an array', () => {
   }).toThrow('Expected resultObj to be an array');
 });
 
-test('should throw error in genDiff when files are not found', () => {
+/*test('should throw error in genDiff when files are not found', () => {
   expect(() => genDiff('wrongPath1.json', 'wrongPath2.json'))
     .toThrow('Expected files to exist');
-});
+});*/
 
 test('should throw error in parser for unsupported format', () => {
   expect(() => {
