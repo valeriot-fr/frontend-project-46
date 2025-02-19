@@ -6,3 +6,13 @@ export default [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
 ];
+module.exports = {
+  env: {
+    jest: true,
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:jest/recommended',
+  ],
+  plugins: ['jest'],
+};
