@@ -20,6 +20,7 @@
     {
      "key": "setting3",
      "oldValue": true,
+     "newValue": null,
      "value": null,
      "type": "changed"
     },
@@ -44,6 +45,7 @@
         {
          "key": "wow",
          "oldValue": "",
+         "newValue": "so much",
          "value": "so much",
          "type": "changed"
         }
@@ -72,6 +74,7 @@
     {
      "key": "baz",
      "oldValue": "bas",
+     "newValue": "bars",
      "value": "bars",
      "type": "changed"
     },
@@ -85,6 +88,7 @@
      "oldValue": {
       "key": "value"
      },
+     "newValue": "str",
      "value": "str",
      "type": "changed"
     }

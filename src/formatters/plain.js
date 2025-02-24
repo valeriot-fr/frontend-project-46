@@ -4,7 +4,6 @@ const stringify = (data) => {
   if (_.isObject(data)) {
     return '[complex value]';
   }
-
   if (typeof data === 'string') {
     return `'${data}'`;
   }
@@ -17,7 +16,7 @@ const plain = (data) => {
     const values = Object.values(obj);
     const strings = values.flatMap((node) => {
       const {
-        key, oldValue, value, type, children,
+        key, oldValue, newValue, value, type, children,
       } = node;
       const newPath = path === '' ? `${key}` : `${path}.${key}`;
       switch (type) {
@@ -26,13 +25,13 @@ const plain = (data) => {
         case 'deleted':
           return `Property '${newPath}' was removed`;
         case 'changed':
-          return `Property '${newPath}' was updated. From ${stringify(oldValue)} to ${stringify(value)}`;
+          return `Property '${newPath}' was updated. From ${stringify(oldValue)} to ${stringify(newValue)}`;
         case 'hasChild':
           return iter(children, newPath);
         case 'unchanged':
           return [];
         default:
-          throw new Error('something wrong');
+          throw new Error(`Unexpected type encountered: ${type}. Node details: ${JSON.stringify(node)}`);
       }
     });
     return strings.filter((item) => item !== undefined).join('\n');

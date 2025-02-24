@@ -1,7 +1,7 @@
 import plain from './plain.js';
 import stylish from './stylish.js';
 
-const formatter = (tree, format) => {
+const form = (tree, format) => {
   switch (format) {
     case 'stylish':
       return stylish(tree);
@@ -13,4 +13,4 @@ const formatter = (tree, format) => {
       throw new Error(`format ${format} not supported. Choose 'stylish', 'plain' or 'json'`);
   }
 };
-export default formatter;
+export default form;

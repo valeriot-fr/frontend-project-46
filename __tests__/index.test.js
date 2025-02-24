@@ -29,39 +29,3 @@ describe.each([
     });
   });
 });
-
-test('should throw error in buildDiff when resultObj is not an array', () => {
-  expect(() => {
-    throw new Error('Expected resultObj to be an array');
-  }).toThrow('Expected resultObj to be an array');
-});
-
-test('should throw error in parser for unsupported format', () => {
-  expect(() => {
-    throw new Error("i don't know this format (ಡ‸ಡ): unsupportedFormat");
-  }).toThrow("i don't know this format (ಡ‸ಡ): unsupportedFormat");
-});
-
-test('should throw error in formatter for unsupported format', () => {
-  expect(() => {
-    throw new Error('format unsupportedFormat not supported. Choose \'stylish\', \'plain\' or \'json\'');
-  }).toThrow('format unsupportedFormat not supported. Choose \'stylish\', \'plain\' or \'json\'');
-});
-
-test('should throw error in plain formatter', () => {
-  expect(() => {
-    throw new Error('something wrong');
-  }).toThrow('something wrong');
-});
-
-test('should throw error in stylish formatter when obj is not an array', () => {
-  expect(() => {
-    throw new Error('Expected obj to be an array');
-  }).toThrow('Expected obj to be an array');
-});
-
-test('should throw error in stylish formatter', () => {
-  expect(() => {
-    throw new Error('something wrong');
-  }).toThrow('something wrong');
-});
